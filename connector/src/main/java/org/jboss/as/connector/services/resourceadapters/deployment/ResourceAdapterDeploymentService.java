@@ -133,6 +133,9 @@ public final class ResourceAdapterDeploymentService extends AbstractResourceAdap
         DEPLOYMENT_CONNECTOR_LOGGER.debugf("Stopping sevice %s",
                         ConnectorServices.RESOURCE_ADAPTER_DEPLOYMENT_SERVICE_PREFIX.append(deploymentName));
         unregisterAll(deploymentName);
+        for (ServiceName name : this.getJndiServices()) {
+            context.getController().getServiceContainer().getService(name).getService().stop(context);
+        }
     }
 
     @Override
